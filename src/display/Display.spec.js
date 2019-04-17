@@ -1,11 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer'; 
-import { render } from 'react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 
 import Display from './Display'
 
 describe('<Display />', () => {
-
+  
+  // when unlocked or open use the green-led class
   it('matches snapshot', () => {
     const tree = renderer.create(<Display />)
     expect(tree.toJSON()).toMatchSnapshot();
@@ -20,15 +21,35 @@ describe('<Display />', () => {
     const { getByText } = render(<Display />);
     getByText(/unlocked/i)
     getByText(/open/i)
+    cleanup();
   })
 
 
-  // cannot be closed or opened if it is locked
-//   displays if gate is open/closed and if it is locked/unlocked
-
 // displays 'Closed' if the closed prop is true and 'Open' if otherwise
-// displays 'Locked' if the locked prop is true and 'Unlocked' if otherwise
+it('displays as closed if the closed prop is true', () => {
+  const { getByText } = render(<Display closed={true} />)
+  getByText(/closed/i);
+  cleanup();
+})
+
+it('displays as open if closed prop is false', () => {
+  const { getByText } = render(<Display closed={false} />)
+  getByText(/open/i);
+  cleanup();
+})
+
+
 // when locked or closed use the red-led class
-// when unlocked or open use the green-led class
+it('displays red leds when closed and locked snapshot', () => {
+  const tree = renderer.create(<Display closed={true} locked={true}/>)
+  expect(tree.toJSON()).toMatchSnapshot();
+})
+
+// displays 'Locked' if the locked prop is true and 'Unlocked' if otherwise
+it('displays as locked if the locked prop is true', () => {
+  const { getByText } = render(<Display closed={true} locked={true} />)
+  getByText(/locked/i)
+  cleanup();
+})
 
 });

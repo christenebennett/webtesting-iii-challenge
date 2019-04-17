@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<Display /> displays red leds when closed and locked snapshot 1`] = `
+<div
+  className="display panel"
+>
+  <div
+    className="led red-led"
+  >
+    Locked
+  </div>
+  <div
+    className="led red-led"
+  >
+    Closed
+  </div>
+</div>
+`;
+
 exports[`<Display /> matches snapshot 1`] = `
 <div
   className="display panel"
