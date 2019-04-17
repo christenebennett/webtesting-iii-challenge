@@ -24,32 +24,31 @@ describe('<Display />', () => {
     cleanup();
   })
 
+  // displays 'Closed' if the closed prop is true
+  it('displays as closed if the closed prop is true', () => {
+    const { getByText } = render(<Display closed={true} />)
+    getByText(/closed/i);
+    cleanup();
+  })
 
-// displays 'Closed' if the closed prop is true and 'Open' if otherwise
-it('displays as closed if the closed prop is true', () => {
-  const { getByText } = render(<Display closed={true} />)
-  getByText(/closed/i);
-  cleanup();
-})
+  // displays 'Open' if the closed prop is false
+  it('displays as open if closed prop is false', () => {
+    const { getByText } = render(<Display closed={false} />)
+    getByText(/open/i);
+    cleanup();
+  })
 
-it('displays as open if closed prop is false', () => {
-  const { getByText } = render(<Display closed={false} />)
-  getByText(/open/i);
-  cleanup();
-})
+  // when locked or closed use the red-led class
+  it('displays red leds when closed and locked snapshot', () => {
+    const tree = renderer.create(<Display closed={true} locked={true}/>)
+    expect(tree.toJSON()).toMatchSnapshot();
+  })
 
-
-// when locked or closed use the red-led class
-it('displays red leds when closed and locked snapshot', () => {
-  const tree = renderer.create(<Display closed={true} locked={true}/>)
-  expect(tree.toJSON()).toMatchSnapshot();
-})
-
-// displays 'Locked' if the locked prop is true and 'Unlocked' if otherwise
-it('displays as locked if the locked prop is true', () => {
-  const { getByText } = render(<Display closed={true} locked={true} />)
-  getByText(/locked/i)
-  cleanup();
-})
+  // displays 'Locked' if the locked prop is true and 'Unlocked' if otherwise
+  it('displays as locked if the locked prop is true', () => {
+    const { getByText } = render(<Display closed={true} locked={true} />)
+    getByText(/locked/i)
+    cleanup();
+  })
 
 });
